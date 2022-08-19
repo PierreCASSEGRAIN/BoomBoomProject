@@ -8,8 +8,15 @@ const int irqPin = 2;         // change for your board; must be a hardware inter
 String outgoing;              // outgoing message
 
 byte msgCount = 0;            // count of outgoing messages
-byte localAddress = 0xBB;     // address of this device
-byte destination = 0xFF;      // destination to send to
+byte localAddress = 0xFF;     // adresse du maître
+byte destination1 = 0x11;      // adresse cible 1
+byte destination2 = 0x22;      // adresse cible 2
+byte destination3 = 0x33;      // adresse cible 3
+byte destination4 = 0x44;      // adresse cible 4
+byte destination5 = 0x55;      // adresse cible 5
+byte destination6 = 0x66;      // adresse cible 6
+byte destination7 = 0x77;      // adresse cible 7
+byte destination8 = 0x88;      // adresse cible 8
 long lastSendTime = 0;        // last send time
 int interval = 2000;          // interval between sends
 
@@ -31,27 +38,120 @@ void setup() {
 }
 
 void loop() {
+  
+  if (Mode==0) {
+    selectionMode();
+  }
+  Serial.println(Mode);
+  switch (Mode){
+    case 1:
+      PreparationModeDeJeu1();
+      Jeu1();
+  }
+
+  Mode=0;
+  
   if (millis() - lastSendTime > interval) {
     String message = "HeLoRa World!";   // send a message
-    sendMessage(message);
-    Serial.println("Sending " + message);
+    sendMessage(message,1);
+    Serial.println("Sending " + message + " to cible 1");
+    sendMessage(message,2);
+    Serial.println("Sending " + message + " to cible 2");
     lastSendTime = millis();            // timestamp the message
-    interval = random(2000) + 1000;    // 2-3 seconds
+    interval = 1000;    // 2-3 seconds
   }
 
   // parse for a packet, and call onReceive with the result:
   onReceive(LoRa.parsePacket());
 }
 
-void sendMessage(String outgoing) {
-  LoRa.beginPacket();                   // start packet
-  LoRa.write(destination);              // add destination address
-  LoRa.write(localAddress);             // add sender address
-  LoRa.write(msgCount);                 // add message ID
-  LoRa.write(outgoing.length());        // add payload length
-  LoRa.print(outgoing);                 // add payload
-  LoRa.endPacket();                     // finish packet and send it
-  msgCount++;                           // increment message ID
+void sendMessage(String message,int numCible) {
+
+  switch (numCible){
+    case 1:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination1);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 2:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination2);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 3:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination3);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 4:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination4);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 5:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination5);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 6:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination6);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 7:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination7);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    case 8:
+      LoRa.beginPacket();                   // start packet
+      LoRa.write(destination8);             // add destination address
+      LoRa.write(localAddress);             // add sender address
+      LoRa.write(msgCount);                 // add message ID
+      LoRa.write(outgoing.length());        // add payload length
+      LoRa.print(outgoing);                 // add payload
+      LoRa.endPacket();                     // finish packet and send it
+      msgCount++;                           // increment message ID
+      break;
+    default:
+      break;      
+  }
+  
 }
 
 void onReceive(int packetSize) {
@@ -89,4 +189,44 @@ void onReceive(int packetSize) {
   Serial.println("RSSI: " + String(LoRa.packetRssi()));
   Serial.println("Snr: " + String(LoRa.packetSnr()));
   Serial.println();
+}
+
+void PreparationModeDeJeu1(){
+  RefreshSeed();
+  for (int i = 0; i < nbDeRound; i++){
+    TableauCibleJeu1[i]=random(1,pow(2,nbDeCapteurs));
+    Serial.print("TableauCibleJeu = ");
+    Serial.println(TableauCibleJeu1[i]);
+  }
+}
+
+int Jeu1(){
+  Serial.println("Le jeu va commencer dans...");
+  delay(1000);
+  Serial.println("5...");
+  delay(1000);
+  Serial.println("4...");
+  delay(1000);
+  Serial.println("3...");
+  delay(1000);
+  Serial.println("2...");
+  delay(1000);
+  Serial.println("1...");
+  delay(1000);
+  Serial.println("C'est parti !");
+  TimerTotalJeu1=millis();
+  Points=0;
+  while (millis()<=TimerTotalJeu1+TempsMancheModeDeJeu1){
+    TimerRoundJeu1=millis();
+    EtatCibles = TableauCibleJeu1[NumRound];
+    NumRound++;
+    Serial.print("Round n°");
+    Serial.println(NumRound);
+    Serial.println(EtatCibles);
+    RoundFini=false;
+  }
+  Serial.println("Terminé !");
+  Serial.print("Vous avez eu ");
+  Serial.print(Points);
+  Serial.println(" points");
 }
